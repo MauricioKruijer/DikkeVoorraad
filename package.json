@@ -6,5 +6,8 @@
   "repository": "git@github.com:MauricioKruijer/DikkeVoorraad.git",
   "author": "Mauricio Kruijer <mauricio.kruijer@gmail.com>",
   "license": "MIT",
-  "private": true
+  "private": true,
+  "dependencies": {
+    "puppeteer": "^1.18.1"
+  }
 }
