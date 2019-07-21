@@ -1,4 +1,11 @@
 const puppeteer = require('puppeteer');
+const args = process.argv.slice(2);
+const productId = args[0];
+
+if (undefined === productId) {
+  console.error('Pass product id as first argument');
+  process.exit(64);
+}
 
 (async () => {
   const browser = await puppeteer.launch({
@@ -10,7 +17,7 @@ const puppeteer = require('puppeteer');
     height: 800
   });
 
-  await page.goto('https://www.bol.com/nl/p/tanden-schrobber-spul/9200000116834026/');
+  await page.goto(`https://www.bol.com/nl/p/tanden-schrobber-spul/${productId}/`);
 
   await page.click('a[data-test=add-to-basket]').catch(() => {
     console.error('Product not found');
