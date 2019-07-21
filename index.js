@@ -11,7 +11,11 @@ const puppeteer = require('puppeteer');
   });
 
   await page.goto('https://www.bol.com/nl/p/tanden-schrobber-spul/9200000116834026/');
-  await page.click('a[data-test=add-to-basket]');
+
+  await page.click('a[data-test=add-to-basket]').catch(() => {
+    console.error('Product not found');
+    process.exit(1);
+  });
 
   page.on('console', consoleObj => console.log(consoleObj.text()));
 
