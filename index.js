@@ -14,6 +14,7 @@ const puppeteer = require('puppeteer');
   await page.click('a[data-test=add-to-basket]');
 
   page.on('console', consoleObj => console.log(consoleObj.text()));
+
   await Promise.all([
     page.waitForNavigation(),
     page.goto('https://www.bol.com/nl/order/basket.html'),
@@ -25,11 +26,16 @@ const puppeteer = require('puppeteer');
       const input = document.createElement('input');
       input.value = 500;
       input.innerText = "500";
-      input.name = 'quantity'
-      form.appendChild(input)
+      input.name = 'quantity';
+
+      form.appendChild(input);
     }),
-    page.$eval('.shopping-cart__row form', form => form.submit())
+    page.$eval('.shopping-cart__row form', form => form.submit()),
   ])
+
+  const maxQuantityOnHand = await page.$eval('.notification__list b:last-child', b => b.innerText).catch(() => 500);
+
+  console.log(maxQuantityOnHand);
 
   await page.screenshot({path: 'example.png'});
   await browser.close();
